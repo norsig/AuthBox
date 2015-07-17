@@ -1,0 +1,6 @@
+[submodule "src/vendor/j4mie/idiorm"]
+	path = src/vendor/j4mie/idiorm
+	url = https://github.com/j4mie/idiorm.git
+[submodule "src/vendor/phpmailer/phpmailer"]
+	path = src/vendor/phpmailer/phpmailer
+	url = https://github.com/PHPMailer/PHPMailer.git
