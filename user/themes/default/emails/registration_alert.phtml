@@ -1,0 +1,54 @@
+<?php include '_styles.php'; ?>
+<!DOCTYPE html>
+<html lang="fr-FR">
+
+  <head>
+
+    <meta charset="utf-8">
+    <title><?php echo __('register.alert_email.subject'); ?></title>
+
+  </head>
+
+  <body>
+
+    <p style="<?php echo $css->p; ?>">A new user registered on <?php echo AuthBox::cfg('app.name'); ?>.</p>
+
+    <hr>
+
+    <p style="<?php echo $css->p; ?>">
+
+      <?php foreach ($user->asObject() as $key => $value): ?>
+        <?php if (strpos($key, 'password') !== false) continue; ?>
+
+        <strong><?php echo strtoupper($key); ?></strong>:
+
+        <?php
+
+          if ($value === null) {
+            echo '&ndash;';
+          } if (is_bool($value)) {
+            echo $value ? __('admin.users.bool.true') : __('admin.users.bool.false');
+          } else if (is_numeric($value)) {
+            echo $value;
+          } else {
+            echo strlen($value) > 33 ? substr($value, 0, 30) . '&hellip;' : $value;
+          }
+
+        ?>
+        <br>
+      <?php endforeach; ?>
+
+    </p>
+
+    <hr>
+
+    <?php if (!$user->is_active): ?>
+      <p style="<?php echo $css->p; ?>">
+        <strong><span style="color: #cc0000;">The account is waiting for your validation.</span></strong><br>
+        <strong><a href="<?php echo AuthBox::makeUrl('admin', [], true); ?>">Click here to see details and validate this account</a></strong>
+      </p>
+    <?php endif; ?>
+
+  </body>
+
+</html>

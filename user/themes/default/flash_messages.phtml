@@ -1,0 +1,14 @@
+
+<?php if ($flashMessages = $this->getFlashMessages()): ?>
+  <div class="container">
+    <?php foreach ($flashMessages as $flashMessage): ?>
+      <div class="alert alert-<?php echo $flashMessage['type']; ?> flash-messages">
+        <ul>
+          <?php foreach ((array) $flashMessage['text'] as $text): ?>
+            <li><?php echo $text; ?></li>
+          <?php endforeach; ?>
+        </ul>
+      </div>
+    <?php endforeach; ?>
+  </div>
+<?php endif; ?>

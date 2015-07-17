@@ -1,0 +1,19 @@
+
+    <div class="container">
+      <br><br><br>
+      <hr>
+      <div class="footer text-center">
+        <span class="label label-primary"><?php echo AuthBox::cfg('app.name'); ?></span>
+        <?php if ($__VIEW !== 'admin' && !$__IS_ADMIN): ?>
+          <span class="label label-light"><a href="<?php echo AuthBox::makeUrl('admin'); ?>">Administration panel</a></span>
+        <?php endif; ?>
+      </div>
+    </div>
+
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="<?php echo $themeUrl; ?>/scripts.js"></script>
+
+  </body>
+
+</html>

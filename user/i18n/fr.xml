@@ -1,0 +1,596 @@
+<?xml version="1.0" ?>
+<lang version="1.0">
+  <translations language="fr">
+
+    <name>Français</name>
+
+    <trans>
+      <key>languages_label</key>
+      <value><![CDATA[Langue : {lang}]]></value>
+    </trans>
+
+    <!-- /////////////////////////////////////////////////////////////////// -->
+    <!-- GLOBAL TRANSLATIONS -->
+
+    <trans>
+      <key>page.title</key>
+      <value><![CDATA[{app_name} &ndash; Identification]]></value>
+    </trans>
+
+    <trans>
+      <key>nav.back_to_site</key>
+      <value><![CDATA[Retourner au site]]></value>
+    </trans>
+
+    <trans>
+      <key>app.logged_in.logout</key>
+      <value><![CDATA[Déconnexion]]></value>
+    </trans>
+
+    <!-- /////////////////////////////////////////////////////////////////// -->
+    <!-- LOGIN PANEL -->
+
+    <trans>
+      <key>login.panel_title</key>
+      <value><![CDATA[Déjà inscrit ?]]></value>
+    </trans>
+
+    <trans>
+      <key>login.submit_label</key>
+      <value><![CDATA[Connexion]]></value>
+    </trans>
+
+    <trans>
+      <key>login.forgot_password</key>
+      <value><![CDATA[Mot de passe oublié ?]]></value>
+    </trans>
+
+    <trans>
+      <key>login.error.login.empty</key>
+      <value><![CDATA[Veuillez renseigner votre adresse email]]></value>
+    </trans>
+
+    <trans>
+      <key>login.error.password.empty</key>
+      <value><![CDATA[Veuillez renseigner votre mot de passe]]></value>
+    </trans>
+
+    <trans>
+      <key>login.error.credentials</key>
+      <value><![CDATA[Les identifiants que vous avez entré sont invalides]]></value>
+    </trans>
+
+    <!-- /////////////////////////////////////////////////////////////////// -->
+    <!-- FORGOT PASSWORD -->
+
+    <trans>
+      <key>forgot_password.modal.title</key>
+      <value><![CDATA[Mot de passe oublié ?]]></value>
+    </trans>
+
+    <trans>
+      <key>forgot_password.modal.info</key>
+      <value><![CDATA[Veuillez renseigner l'adresse email associée à votre compte.<br>Vous recevrez à cette adresse un lien vous permettant de réinitialiser votre mot de passe.]]></value>
+    </trans>
+
+    <trans>
+      <key>forgot_password.modal.cancel</key>
+      <value><![CDATA[Annuler]]></value>
+    </trans>
+
+    <trans>
+      <key>forgot_password.modal.apply</key>
+      <value><![CDATA[Valider]]></value>
+    </trans>
+
+    <trans>
+      <key>forgot_password.sent</key>
+      <value><![CDATA[Un email vient d'être envoyé à {login}.<strong><br>Cliquez sur le lien qu'il contient pour réinitialiser votre mot de passe.</strong>]]></value>
+    </trans>
+
+    <trans>
+      <key>forgot_password.not_exists</key>
+      <value><![CDATA[L'adresse email {login} n'est associée à aucun compte.]]></value>
+    </trans>
+
+    <trans>
+      <key>forgot_password.email_subject</key>
+      <value><![CDATA[Réinitialisation de votre mot de passe]]></value>
+    </trans>
+
+    <!-- /////////////////////////////////////////////////////////////////// -->
+    <!-- RESET PASSWORD -->
+
+    <trans>
+      <key>reset_password.panel_title</key>
+      <value><![CDATA[Définir un nouveau mot de passe]]></value>
+    </trans>
+
+    <trans>
+      <key>reset_password.info</key>
+      <value><![CDATA[Vous avez demandé à réinitialiser votre mot de passe.<br>Merci de renseigner un nouveau mot de passe dans le champ suivant, et de valider le formulaire.]]></value>
+    </trans>
+
+    <trans>
+      <key>reset_password.submit_label</key>
+      <value><![CDATA[Valider]]></value>
+    </trans>
+
+    <trans>
+      <key>reset_password.success</key>
+      <value><![CDATA[Votre mot de passe a bien été mis à jour.]]></value>
+    </trans>
+
+    <!-- /////////////////////////////////////////////////////////////////// -->
+    <!-- REGISTER PANEL -->
+
+    <trans>
+      <key>register.panel_title</key>
+      <value><![CDATA[Vous n'avez pas de compte ?]]></value>
+    </trans>
+
+    <trans>
+      <key>register.submit_label</key>
+      <value><![CDATA[Créer mon compte]]></value>
+    </trans>
+
+    <trans>
+      <key>register.success_email.subject</key>
+      <value><![CDATA[Votre inscription]]></value>
+    </trans>
+
+    <trans>
+      <key>register.alert_email.subject</key>
+      <value><![CDATA[Nouvelle inscription]]></value>
+    </trans>
+
+    <!-- /////////////////////////////////////////////////////////////////// -->
+    <!-- SUCCESS -->
+
+    <trans>
+      <key>success.title</key>
+      <value><![CDATA[Félicitations !]]></value>
+    </trans>
+
+    <trans>
+      <key>success.text</key>
+      <value><![CDATA[Votre compte a bien été crée.]]></value>
+    </trans>
+
+    <trans>
+      <key>success.pending</key>
+      <value><![CDATA[Votre compte est en attente de modération par le webmaster.<br>Vous serez averti par email lorsqu'il aura été activé.]]></value>
+    </trans>
+
+    <trans>
+      <key>success.continue</key>
+      <value><![CDATA[Continuer]]></value>
+    </trans>
+
+    <!-- /////////////////////////////////////////////////////////////////// -->
+    <!-- FIELDS -->
+
+    <trans>
+      <key>fields.popover.title</key>
+      <value><![CDATA[Informations]]></value>
+    </trans>
+
+    <!-- Field "login" (email/username depending on configuration) -->
+
+    <trans>
+      <key>fields.login.label</key>
+      <value><![CDATA[Adresse email]]></value>
+    </trans>
+
+    <trans>
+      <key>fields.login.placeholder</key>
+      <value><![CDATA[Veuillez renseigner votre adresse email]]></value>
+    </trans>
+
+    <!-- Field "email" -->
+
+    <trans>
+      <key>fields.email.label</key>
+      <value><![CDATA[Adresse email]]></value>
+    </trans>
+
+    <trans>
+      <key>fields.email.placeholder</key>
+      <value><![CDATA[Veuillez renseigner votre adresse email]]></value>
+    </trans>
+
+    <trans>
+      <key>fields.email.info</key>
+      <value><![CDATA[]]></value>
+    </trans>
+
+    <trans>
+      <key>fields.email.missing</key>
+      <value><![CDATA[<strong>L'adresse email</strong> est obligatoire.]]></value>
+    </trans>
+
+    <trans>
+      <key>fields.email.bad_format</key>
+      <value><![CDATA[L'adresse email renseignée <strong>n'est pas valide</strong>.]]></value>
+    </trans>
+
+    <trans>
+      <key>fields.email.duplicate</key>
+      <value><![CDATA[<strong>L'adresse email existe déjà</strong>, merci de vous connecter avec.]]></value>
+    </trans>
+
+    <!-- Field "username" -->
+
+    <trans>
+      <key>fields.username.label</key>
+      <value><![CDATA[Nom d'utilisateur]]></value>
+    </trans>
+
+    <trans>
+      <key>fields.username.placeholder</key>
+      <value><![CDATA[Veuillez entrer un nouveau nom d'utilisateur]]></value>
+    </trans>
+
+    <trans>
+      <key>fields.username.info</key>
+      <value><![CDATA[Votre nom d'utilisateur est public.<br>3 caractères minimum.<br>Caractères autorisés: A-Z, 0-9, . et _.]]></value>
+    </trans>
+
+    <trans>
+      <key>fields.username.missing</key>
+      <value><![CDATA[Le <strong>nom d'utilisateur</strong> est obligatoire.]]></value>
+    </trans>
+
+    <trans>
+      <key>fields.username.bad_format</key>
+      <value><![CDATA[Le <strong>format du nom d'utilisateur</strong> n'est pas correct.]]></value>
+    </trans>
+
+    <trans>
+      <key>fields.username.duplicate</key>
+      <value><![CDATA[Le <strong>nom d'utilisateur existe déjà</strong>. Merci d'utiliser un autre nom d'utilisateur, ou de vous connecter avec si vous êtes propriétaire de ce compte.]]></value>
+    </trans>
+
+    <!-- Field "password" -->
+
+    <trans>
+      <key>fields.password.label</key>
+      <value><![CDATA[Mot de passe]]></value>
+    </trans>
+
+    <trans>
+      <key>fields.password.placeholder</key>
+      <value><![CDATA[Veuillez renseigner votre mot de passe]]></value>
+    </trans>
+
+    <trans>
+      <key>fields.password.info</key>
+      <value><![CDATA[Longueur minimale: 6 caractères.]]></value>
+    </trans>
+
+    <trans>
+      <key>fields.password.missing</key>
+      <value><![CDATA[Le <strong>mot de passe</strong> est obligatoire.]]></value>
+    </trans>
+
+    <trans>
+      <key>fields.password.bad_format</key>
+      <value><![CDATA[Le <strong>format du mot de passe</strong> est incorrect.]]></value>
+    </trans>
+
+    <trans>
+      <key>fields.password.leave_empty</key>
+      <value><![CDATA[Laissez vide pour conserver inchangé]]></value>
+    </trans>
+
+    <!-- Field "current_password" -->
+
+    <trans>
+      <key>fields.current_password.label</key>
+      <value><![CDATA[Mot de passe actuel]]></value>
+    </trans>
+
+    <trans>
+      <key>fields.current_password.placeholder</key>
+      <value><![CDATA[Veuillez renseigner votre mot de passe actuel]]></value>
+    </trans>
+
+    <trans>
+      <key>fields.current_password.missing</key>
+      <value><![CDATA[Le <strong>mot de passe actuel</strong> est obligatoire.]]></value>
+    </trans>
+
+    <trans>
+      <key>fields.current_password.bad</key>
+      <value><![CDATA[Le <strong>mot de passe actuel</strong> est incorrect.]]></value>
+    </trans>
+
+    <!-- Field "new_password" -->
+
+    <trans>
+      <key>fields.new_password.label</key>
+      <value><![CDATA[Nouveau mot de passe]]></value>
+    </trans>
+
+    <trans>
+      <key>fields.new_password.placeholder</key>
+      <value><![CDATA[Veuillez renseigner un nouveau mot de passe]]></value>
+    </trans>
+
+    <trans>
+      <key>fields.new_password.missing</key>
+      <value><![CDATA[Le <strong>nouveau mot de passe</strong> est obligatoire.]]></value>
+    </trans>
+
+    <!-- Field "role" -->
+
+    <trans>
+      <key>fields.role.label</key>
+      <value><![CDATA[Rôle]]></value>
+    </trans>
+
+    <!-- Field "remember" -->
+
+    <trans>
+      <key>fields.remember.label</key>
+      <value><![CDATA[Se souvenir de moi]]></value>
+    </trans>
+
+    <!-- Field "is_active" -->
+
+    <trans>
+      <key>fields.is_active.label</key>
+      <value><![CDATA[Utilisateur actif]]></value>
+    </trans>
+
+    <!-- /////////////////////////////////////////////////////////////////// -->
+    <!-- PROFILE -->
+
+    <trans>
+      <key>profile.panel_title</key>
+      <value><![CDATA[Votre profil]]></value>
+    </trans>
+
+    <trans>
+      <key>profile.submit_label</key>
+      <value><![CDATA[Sauvegarder]]></value>
+    </trans>
+
+    <trans>
+      <key>profile.success</key>
+      <value><![CDATA[Vos informations ont bien été modifiées.]]></value>
+    </trans>
+
+    <trans>
+      <key>password.panel_title</key>
+      <value><![CDATA[Votre mot de passe]]></value>
+    </trans>
+
+    <trans>
+      <key>password.desc</key>
+      <value><![CDATA[Pour changer votre mot de passe, vous devez renseigner votre <strong>mot de passe actuel</strong>, puis renseigner un nouveau mot de passe.]]></value>
+    </trans>
+
+    <trans>
+      <key>password.submit_label</key>
+      <value><![CDATA[Changer mon mot de passe]]></value>
+    </trans>
+
+    <trans>
+      <key>password.success</key>
+      <value><![CDATA[Votre mot de passe a bien été modifié.]]></value>
+    </trans>
+
+    <!-- /////////////////////////////////////////////////////////////////// -->
+    <!-- ADMINISTRATOR -->
+
+    <trans>
+      <key>admin.bad_password</key>
+      <value><![CDATA[Le mot de passe administrateur est invalide.]]></value>
+    </trans>
+
+    <!-- Navigation -->
+
+    <trans>
+      <key>admin.nav.title</key>
+      <value><![CDATA[Administration]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.nav.panel</key>
+      <value><![CDATA[Panneau d'administration]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.nav.logout</key>
+      <value><![CDATA[Déconnexion]]></value>
+    </trans>
+
+    <!-- Login -->
+
+    <trans>
+      <key>admin.login.password.label</key>
+      <value><![CDATA[Mot de passe admnistrateur]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.login.password.placeholder</key>
+      <value><![CDATA[Veuillez renseigner votre mot de passe administrateur]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.login.submit_label</key>
+      <value><![CDATA[Connexion]]></value>
+    </trans>
+
+    <!-- Tabs -->
+
+    <trans>
+      <key>admin.tabs.users</key>
+      <value><![CDATA[Utilisateurs]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.tabs.tools</key>
+      <value><![CDATA[Outils]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.tabs.maintenance</key>
+      <value><![CDATA[Maintenance]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.tabs.server</key>
+      <value><![CDATA[Informations serveur]]></value>
+    </trans>
+
+    <!-- TAB: Users -->
+
+    <trans>
+      <key>admin.users.title</key>
+      <value><![CDATA[Liste des utilisateurs]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.users.empty</key>
+      <value><![CDATA[Aucun utilisateur...]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.users.stats</key>
+      <value><![CDATA[
+        Total : <span class="badge">{total}</span> &nbsp;&ndash;&nbsp;
+        Utilisateur(s) actif(s) : <span class="badge">{active}</span> &nbsp;&ndash;&nbsp;
+        En attente d'activation : <span class="badge">{inactive}</span>
+      ]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.users.activate</key>
+      <value><![CDATA[Activer cet utilisateur]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.users.bool.true</key>
+      <value><![CDATA[OUI]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.users.bool.false</key>
+      <value><![CDATA[NON]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.users.edit</key>
+      <value><![CDATA[Éditer les informations utilisateur]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.users.edit.modal.title</key>
+      <value><![CDATA[Édition des informations utilisateur]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.users.edit.modal.cancel</key>
+      <value><![CDATA[Annuler]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.users.edit.modal.apply</key>
+      <value><![CDATA[Sauvegarder]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.users.delete</key>
+      <value><![CDATA[Supprimer l'utilisateur]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.users.delete.modal.title</key>
+      <value><![CDATA[Suppression d'un utilisateur]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.users.delete.modal.warning</key>
+      <value><![CDATA[<strong>Attention :</strong> Vous allez supprimer définitivement cet utilisateur. Cette opération ne peut être annulée.]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.users.delete.modal.cancel</key>
+      <value><![CDATA[Annuler]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.users.delete.modal.apply</key>
+      <value><![CDATA[Supprimer]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.activation_email.subject</key>
+      <value><![CDATA[Votre compte a été activé]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.activation.confirmation</key>
+      <value><![CDATA[L'utilisateur a été activé.]]></value>
+    </trans>
+
+    <!-- TAB: Tools -->
+
+    <trans>
+      <key>admin.tools.tokens.title</key>
+      <value><![CDATA[Codes d'auto-activation]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.tools.tokens.info</key>
+      <value><![CDATA[Ces codes vous permettent de diffuser des adresses URL à vos futurs utilisateurs.<br>En utilisant ce(s) lien(s), les utilisateurs enregistrés seront automatiquement activés même si l'option <code>behaviour.autoActivated</code> est à false dans le fichier de configuration.]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.maintenance.actions.title</key>
+      <value><![CDATA[Actions de maintenance]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.maintenance.actions.warning</key>
+      <value><![CDATA[<strong>Attention :</strong> Ces actions affectent de manière importante la base de données et peuvent causer des pertes de données. Ne faites rien sans être sûr de vous.]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.maintenance.action.install</key>
+      <value><![CDATA[<strong>Installer</strong> la base de données]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.maintenance.action.uninstall</key>
+      <value><![CDATA[<strong>Déinstaller</strong> la base de données]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.maintenance.action.reinstall</key>
+      <value><![CDATA[<strong>Réinstaller</strong> la base de données]]></value>
+    </trans>
+
+    <!-- TAB: Server -->
+
+    <trans>
+      <key>admin.server.time.title</key>
+      <value><![CDATA[Temps serveur]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.server.session.title</key>
+      <value><![CDATA[Variables de session]]></value>
+    </trans>
+
+    <trans>
+      <key>admin.server.phpinfo.title</key>
+      <value><![CDATA[phpinfo()]]></value>
+    </trans>
+
+    <!-- /////////////////////////////////////////////////////////////////// -->
+
+  </translations>
+</lang>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>AuthBox installation</title>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <style type="text/css">
+      body { margin: 20px 0 70px 0; background: #fafafa; }
+      .nav-tabs { margin-bottom: 15px; }
+    </style>
+
+  </head>
+
+  <body>
+
+    <?php $config_file = AuthBox::getConfigFile(); ?>
+
+    <div class="container">
+      <div class="page-header">
+        <h1>Installation of AuthBox</h1>
+      </div>
+
+      <?php if (!is_writable($config_dir = dirname($config_file))): ?>
+
+        <div class="alert alert-danger">
+          <p><strong>The configuration file <code><?php echo $config_file; ?></code> is not writable</strong>.</p>
+          <p>
+            You can change the rights of the folder to allow file creation
+            (something like <code>755</code> should be fine)
+            or create manually the file <code>config.php</code>, based on <code>config-sample.php</code>.
+          </p>
+        </div>
+
+      <?php else: ?>
+
+        <?php $l = 2; $r = 12 - $l; ?>
+
+        <div class="alert alert-info">
+          <p><strong>The following form helps you to configure AuthBox.</strong></p>
+          <p>
+            If you prefer to do it manually, you can create a file <code><?php echo $config_file; ?></code>,
+            based on <code>config-sample.php</code> in the same directory.
+            After that, don't forget to do <strong>Admin Panel &rsaquo; Maintenance &rsaquo; Install database</strong>.
+          </p>
+        </div>
+
+        <div class="alert alert-danger hidden" id="error_message">
+          <p><strong></strong></p>
+        </div>
+
+        <form action="<?php echo AUTHBOX_REQUEST_URL; ?>" method="post" class="form-horizontal">
+          <div class="panel panel-default">
+            <div class="panel-heading"><h3 class="panel-title">Your app settings</h3></div>
+            <div class="panel-body">
+              <div class="form-group">
+                <label class="col-sm-<?php echo $l; ?> control-label">App name</label>
+                <div class="col-sm-<?php echo $r; ?>">
+                  <input type="text" class="form-control" name="setup[app_name]" value="Your App Name">
+                  <span class="help-block">The app name will be displayed in the layout and in the emails.</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-<?php echo $l; ?> control-label">Baseline</label>
+                <div class="col-sm-<?php echo $r; ?>">
+                  <input type="text" class="form-control" name="setup[app_baseline]" value="A sentence that describe your service">
+                  <span class="help-block">The baseline will be displayed in the layout's header. If you don't want it, leave it blank.</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-<?php echo $l; ?> control-label">Homepage URL</label>
+                <div class="col-sm-<?php echo $r; ?>">
+                  <input type="text" class="form-control" name="setup[homepage_url]" value="../">
+                  <span class="help-block">The URL to the homepage. You can set an absolute URL, or a relative to the root of the AuthBox folder.</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-<?php echo $l; ?> control-label">Default language</label>
+                <div class="col-sm-<?php echo $r; ?>">
+                  <select class="form-control" name="setup[default_language]">
+                    <?php foreach (glob(AUTHBOX_USER_DIR . DS . 'i18n' . DS . '*.xml') as $f): ?>
+                      <?php if ($lng = preg_replace('/^.*\/([^\/.]*)\.xml$/i', '$1', $f)): ?>
+                        <option value="<?php echo $lng; ?>"<?php if ($lng === 'en') echo ' selected="selected"' ?>><?php echo strtoupper($lng); ?></option>
+                      <?php endif; ?>
+                    <?php endforeach; ?>
+                  </select>
+                  <span class="help-block">
+                    AuthBox let the user choice his prefered language, but you'll need a default language.<br>
+                    You can also disable the language selection in the configuration file.
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading"><h3 class="panel-title">Database</h3></div>
+            <div class="panel-body">
+              <?php
+                $allDbms = [
+                  'mysql' => ['name' => 'MySQL', 'port' => 3306, 'default' => true],
+                  'pgsql' => ['name' => 'PostgreSQL', 'port' => 5432, 'default' => false],
+                ];
+              ?>
+
+              <ul class="nav nav-tabs" role="tablist">
+                <?php foreach ($allDbms as $dbms => $dbmsDefaults): ?>
+                  <li role="presentation"<?php echo $dbmsDefaults['default'] ? ' class="active"' : ''; ?>>
+                    <a href="#<?php echo $dbms; ?>" aria-controls="<?php echo $dbms; ?>" role="tab" data-toggle="tab" rel="db">
+                      <?php echo $dbmsDefaults['name']; ?>
+                    </a>
+                  </li>
+                <?php endforeach; ?>
+                <li role="presentation"><a href="#sqlite" aria-controls="sqlite" role="tab" data-toggle="tab" rel="db">SQLite</a></li>
+              </ul>
+
+              <div class="tab-content">
+                <?php foreach ($allDbms as $dbms => $dbmsDefaults): ?>
+                  <div role="tabpanel" class="tab-pane<?php echo $dbmsDefaults['default'] ? ' active' : ''; ?>" id="<?php echo $dbms; ?>">
+                    <div class="form-group">
+                      <label class="col-sm-<?php echo $l; ?> control-label">Host</label>
+                      <div class="col-sm-<?php echo $r; ?>">
+                        <input type="text" class="form-control" name="db[<?php echo $dbms; ?>][host]" value="localhost">
+                        <span class="help-block">The database server's hostname (often <code>localhost</code>).</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-<?php echo $l; ?> control-label">Port</label>
+                      <div class="col-sm-<?php echo $r; ?>">
+                        <input type="text" class="form-control" name="db[<?php echo $dbms; ?>][port]" value="<?php echo $dbmsDefaults['port']; ?>">
+                        <span class="help-block">The database server's port (often <code><?php echo $dbmsDefaults['port']; ?></code> for <?php echo $dbmsDefaults['name']; ?> database systems).</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-<?php echo $l; ?> control-label">Username</label>
+                      <div class="col-sm-<?php echo $r; ?>">
+                        <input type="text" class="form-control" name="db[<?php echo $dbms; ?>][username]" value="root">
+                        <span class="help-block">The user for database connection.</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-<?php echo $l; ?> control-label">Password</label>
+                      <div class="col-sm-<?php echo $r; ?>">
+                        <input type="text" class="form-control" name="db[<?php echo $dbms; ?>][password]" value="">
+                        <span class="help-block">The password associated to the user.</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-<?php echo $l; ?> control-label">Database name</label>
+                      <div class="col-sm-<?php echo $r; ?>">
+                        <input type="text" class="form-control" name="db[<?php echo $dbms; ?>][dbname]" value="dbname">
+                        <span class="help-block">The name of the database.</span>
+                      </div>
+                    </div>
+                  </div>
+                <?php endforeach; ?>
+
+                <div role="tabpanel" class="tab-pane" id="sqlite">
+                  <div class="form-group">
+                    <label class="col-sm-<?php echo $l; ?> control-label">File path</label>
+                    <div class="col-sm-<?php echo $r; ?>">
+                      <input type="text" class="form-control" name="db[sqlite][filepath]" value="../db.sqlite">
+                      <span class="help-block">Absolute or relative path to the SQLite file, from the AuthBox root directory (<code><?php echo AUTHBOX_ROOT_DIR; ?></code>).</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <hr>
+
+              <div class="form-group">
+                <label class="col-sm-<?php echo $l; ?> control-label">Tables prefix</label>
+                <div class="col-sm-<?php echo $r; ?>">
+                  <input type="text" class="form-control" name="setup[db_tables_prefix]" value="ab_">
+                  <span class="help-block">
+                    AuthBox needs two tables: <code>users</code> and <code>tokens</code>.<br>
+                    The prefix is here to avoid conflicts with your existing/further tables.
+                  </span>
+                </div>
+              </div>
+
+              <input type="hidden" name="setup[dbms]" id="dbms" value="mysql">
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading"><h3 class="panel-title">Administration panel</h3></div>
+            <div class="panel-body">
+              <div class="form-group">
+                <label class="col-sm-<?php echo $l; ?> control-label">Password</label>
+                <div class="col-sm-<?php echo $r; ?>">
+                  <input type="text" class="form-control" name="setup[admin_password]" value="<?php echo $this->generatePassword(12); ?>">
+                  <span class="help-block">This is the password you'll use to manage your users.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading"><h3 class="panel-title">Emails</h3></div>
+            <div class="panel-body">
+              <div class="form-group">
+                <label class="col-sm-<?php echo $l; ?> control-label">From</label>
+                <div class="col-sm-<?php echo $r; ?>">
+                  <input type="text" class="form-control" name="setup[emails_from]" value="you@domain.tld">
+                  <span class="help-block">An email address which will used for the From parameter of emails sent by AuthBox.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="pull-right">
+                <input type="hidden" name="do" value="cfg">
+                <button type="submit" class="btn btn-primary btn-lg">
+                  <span class="glyphicon glyphicon-import" aria-hidden="true"></span>
+                  Run installation
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+      <?php endif; ?>
+    </div>
+
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <script>
+      $(function() {
+        $("#config_source").click(function() {
+          $(this).select();
+        });
+
+        $("a[rel='db'][data-toggle='tab']").on("shown.bs.tab", function(e) {
+          $("#dbms").val($(e.target).attr("aria-controls"));
+        });
+
+        $("form").submit(function(e) {
+          e.preventDefault();
+
+          var form = $(this);
+
+          $("body").css({ opacity: 0.5 });
+
+          $.ajax({
+            url: form.attr("action"),
+            type: form.attr("method"),
+            data: form.serialize(),
+            dataType: "json",
+            success: function(data) {
+              window.scrollTo(0, 0);
+
+              if (!data.success) {
+                $("#error_message p strong").html(data.error);
+                $("#error_message").removeClass("hidden");
+                $("body").css({ opacity: 1 });
+                return;
+              }
+
+              window.location.reload();
+            }
+          });
+        });
+      });
+    </script>
+
+  </body>
+
+</html>

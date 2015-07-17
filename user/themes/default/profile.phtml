@@ -1,0 +1,146 @@
+<?php include 'header.phtml'; ?>
+
+<?php
+
+  $fields = (new AuthBox\Models\User())->getAdditionalFields();
+  $profileErrors = AuthBox\Lib\Session::delete('profile_errors');
+  $passwordErrors = AuthBox\Lib\Session::delete('password_errors');
+
+?>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <form action="<?php echo AuthBox::makeUrl('profile', ['do' => 'profile']); ?>" method="post">
+
+        <div class="panel panel-default">
+          <div class="panel-heading"><h3 class="panel-title"><?php echo __('profile.panel_title'); ?></h3></div>
+          <div class="panel-body">
+
+            <?php if ($profileErrors): ?>
+              <div class="alert alert-danger">
+                <ul>
+                  <?php foreach ($profileErrors as $err): ?>
+                    <li><?php echo $err; ?></li>
+                  <?php endforeach; ?>
+                </ul>
+              </div>
+            <?php endif; ?>
+
+            <?php foreach ($fields as $fieldName => $field): ?>
+              <?php if (!$field['is_visible']) continue; ?>
+
+              <div class="form-group">
+                <label for="profile-<?php echo $fieldName; ?>">
+                  <?php echo $field['label']; ?>
+                </label>
+
+                <?php if ($field['messages']['info']): ?>
+                  <div class="input-group">
+                <?php endif; ?>
+
+                <input
+                  type="<?php echo $field['type']; ?>"
+                  class="form-control"
+                  id="profile-<?php echo $fieldName; ?>"
+                  name="<?php echo $fieldName; ?>"
+                  placeholder="<?php echo $field['placeholder']; ?>"
+                  value="<?php echo htmlentities($__FORM && array_key_exists($fieldName, $__FORM)
+                    ? $__FORM[$fieldName] : $user->$fieldName, ENT_COMPAT, 'utf-8'); ?>">
+
+                <?php if ($field['messages']['info']): ?>
+                    <span class="input-group-btn">
+                      <button
+                        type="button"
+                        class="btn btn-default"
+                        data-toggle="popover"
+                        data-trigger="focus"
+                        data-placement="left"
+                        tabindex="-1"
+                        title="<?php echo __('fields.popover.title'); ?>"
+                        data-content="<?php echo $field['messages']['info']; ?>">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                      </button>
+                    </span>
+                  </div>
+                <?php endif; ?>
+              </div>
+            <?php endforeach; ?>
+
+          </div>
+          <div class="panel-footer">
+            <div class="pull-right">
+              <button type="submit" class="btn btn-primary">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                <?php echo __('profile.submit_label'); ?>
+              </button>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+
+      <form action="<?php echo AuthBox::makeUrl('profile', ['do' => 'password']); ?>" method="post">
+
+        <div class="panel panel-default">
+          <div class="panel-heading"><h3 class="panel-title"><?php echo __('password.panel_title'); ?></h3></div>
+          <div class="panel-body">
+
+            <div class="alert alert-info"><?php echo __('password.desc'); ?></div>
+
+            <?php if ($passwordErrors): ?>
+              <div class="alert alert-danger">
+                <ul>
+                  <?php foreach ($passwordErrors as $err): ?>
+                    <li><?php echo $err; ?></li>
+                  <?php endforeach; ?>
+                </ul>
+              </div>
+            <?php endif; ?>
+
+            <div class="form-group">
+              <label for="changePassword-current_password"><?php echo __('fields.current_password.label'); ?></label>
+              <input
+                type="password"
+                class="form-control"
+                id="changePassword-current_password"
+                name="current_password"
+                placeholder="<?php echo __('fields.current_password.placeholder'); ?>">
+            </div>
+
+            <div class="form-group">
+              <label for="changePassword-new_password"><?php echo __('fields.new_password.label'); ?></label>
+              <input
+                type="password"
+                class="form-control"
+                id="changePassword-new_password"
+                name="new_password"
+                placeholder="<?php echo __('fields.new_password.placeholder'); ?>">
+            </div>
+
+          </div>
+          <div class="panel-footer">
+            <div class="pull-right">
+              <button type="submit" class="btn btn-primary">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                <?php echo __('password.submit_label'); ?>
+              </button>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<?php include 'footer.phtml'; ?>

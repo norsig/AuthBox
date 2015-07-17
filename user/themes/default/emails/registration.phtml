@@ -1,0 +1,89 @@
+<?php include '_styles.php'; ?>
+<!DOCTYPE html>
+<html lang="fr-FR">
+
+  <head>
+
+    <meta charset="utf-8">
+    <title><?php echo __('register.success_email.subject'); ?></title>
+
+  </head>
+
+  <body>
+
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+      <tbody>
+        <tr><td height="32"></td></tr>
+        <tr>
+          <td>
+            <table
+              cellpadding="15"
+              cellspacing="0"
+              border="0"
+              style="<?php echo $css->globalBox; ?>"
+              align="center">
+
+              <tbody>
+
+                <tr>
+                  <td
+                    bgcolor="#f5f5f5"
+                    height="80"
+                    valign="bottom"
+                    style="font-size: 28px; color: #999999; <?php echo $css->fontFamily; ?>">
+                    <strong><?php echo AuthBox::cfg('app.name'); ?></strong>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td bgcolor="#fefefe" style="border: 1px solid #dddddd; border-left: none; border-right: none;">
+                    <p style="<?php echo $css->p; ?>">Welcome to <?php echo AuthBox::cfg('app.name'); ?>.</p>
+
+                    <p style="<?php echo $css->p; ?>">Thanks for your registration.</p>
+
+                    <?php if ($user->is_active): ?>
+
+                      <p style="<?php echo $css->p; ?>">
+                        You can login to your account using your email address:
+                        <strong><?php echo $user->getEmail(); ?></strong> and the password only you knows.
+                      </p>
+
+                      <p style="<?php echo $css->p; ?>">
+                        Don't remember your password?<br>
+                        Don't be worry: click on "<strong>Forgot your password?</strong>" in the
+                        <a href="<?php echo AuthBox::makeUrl('login', [], true); ?>" style="<?php echo $css->a; ?>">login form</a>.
+                      </p>
+
+                    <?php else: ?>
+
+                      <p style="<?php echo $css->p; ?>">
+                        Your account is pending for validation by the webmaster.<br>
+                        You'll receive an email at <strong><?php echo $user->getEmail(); ?></strong> when your account will be activated.
+                      </p>
+
+                    <?php endif; ?>
+
+                    <p style="<?php echo $css->p; ?>">Cheers.</p>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td
+                    bgcolor="#f5f5f5"
+                    style="color: #999999; <?php echo $css->fontFamily . ' ' . $css->fontSize; ?>">
+                    <em>The <a href="<?php echo AuthBox::homepageUrl(); ?>" style="<?php echo $css->a; ?>"><?php echo AuthBox::cfg('app.name'); ?></a> Team.</em>
+                  </td>
+                </tr>
+
+              </tbody>
+
+            </table>
+          </td>
+        </tr>
+        <tr><td height="32"></td></tr>
+      </tbody>
+    </table>
+
+  </body>
+
+</html>

@@ -1,0 +1,23 @@
+<?php include 'header.phtml'; ?>
+
+<div class="container">
+  <div class="row">
+
+    <?php $allForms = count($forms) >= 2; ?>
+
+    <?php if (in_array('login', $forms)): ?>
+      <div class="col-md-6<?php if (!$allForms) echo ' col-md-offset-3'; ?>">
+        <?php include 'login.phtml'; ?>
+      </div>
+    <?php endif; ?>
+
+    <?php if (in_array('register', $forms)): ?>
+      <div class="col-md-6<?php if (!$allForms) echo ' col-md-offset-3'; ?>">
+        <?php include 'register.phtml'; ?>
+      </div>
+    <?php endif; ?>
+
+  </div>
+</div>
+
+<?php include 'footer.phtml'; ?>

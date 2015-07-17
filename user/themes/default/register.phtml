@@ -1,0 +1,91 @@
+
+<?php
+
+  $fields = (new AuthBox\Models\User())->getAdditionalFields();
+  $errors = AuthBox\Lib\Session::delete('register_errors');
+
+?>
+
+<form action="<?php echo AuthBox::makeUrl('register',
+  [
+    'previous' => AUTHBOX_REQUEST_URL,
+    'after' => $this->p('after'),
+    't' => $this->p('t'),
+  ]); ?>" method="post">
+
+  <div class="panel panel-default">
+    <div class="panel-heading"><h3 class="panel-title"><?php echo __('register.panel_title'); ?></h3></div>
+    <div class="panel-body">
+
+      <?php if ($errors): ?>
+        <div class="alert alert-danger">
+          <ul>
+            <?php foreach ($errors as $err): ?>
+              <li><?php echo $err; ?></li>
+            <?php endforeach; ?>
+          </ul>
+        </div>
+      <?php endif; ?>
+
+      <?php foreach ($fields as $fieldName => $field): ?>
+        <?php if (!$field['is_visible']) continue; ?>
+
+        <div class="form-group">
+          <label for="register-<?php echo $fieldName; ?>">
+            <?php echo $field['label']; ?>
+          </label>
+
+          <?php if ($field['messages']['info']): ?>
+            <div class="input-group">
+          <?php endif; ?>
+
+          <input
+            type="<?php echo $field['type']; ?>"
+            class="form-control"
+            id="register-<?php echo $fieldName; ?>"
+            name="<?php echo $fieldName; ?>"
+            placeholder="<?php echo $field['placeholder']; ?>"
+            value="<?php echo htmlentities($__FORM && array_key_exists($fieldName, $__FORM)
+              ? $__FORM[$fieldName] : $this->p($fieldName, ''), ENT_COMPAT, 'utf-8'); ?>">
+
+          <?php if ($field['messages']['info']): ?>
+              <span class="input-group-btn">
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  data-toggle="popover"
+                  data-trigger="focus"
+                  data-placement="left"
+                  tabindex="-1"
+                  title="<?php echo __('fields.popover.title'); ?>"
+                  data-content="<?php echo $field['messages']['info']; ?>">
+                  <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                </button>
+              </span>
+            </div>
+          <?php endif; ?>
+        </div>
+      <?php endforeach; ?>
+
+      <div class="form-group">
+        <label for="register-password"><?php echo __('fields.password.label'); ?></label>
+        <input
+          type="password"
+          class="form-control"
+          id="register-password"
+          name="password"
+          placeholder="<?php echo __('fields.password.placeholder'); ?>">
+      </div>
+
+    </div>
+    <div class="panel-footer">
+      <div class="pull-right">
+        <button type="submit" class="btn btn-primary">
+          <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+          <?php echo __('register.submit_label'); ?>
+        </button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</form>

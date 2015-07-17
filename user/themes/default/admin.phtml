@@ -1,0 +1,375 @@
+<?php include 'header.phtml'; ?>
+
+<?php if (!$__IS_ADMIN): ?>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <form action="<?php echo AuthBox::makeUrl('admin'); ?>" method="post">
+
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="form-group">
+                <label for="password"><?php echo __('admin.login.password.label'); ?></label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="<?php echo __('admin.login.password.placeholder'); ?>">
+              </div>
+
+              <?php if ($flashMessages = $this->getFlashMessages()): ?>
+                <?php foreach ($flashMessages as $flashMessage): ?>
+                  <div class="alert alert-<?php echo $flashMessage->type; ?>">
+                    <?php echo $flashMessage->text; ?>
+                  </div>
+                <?php endforeach; ?>
+              <?php endif; ?>
+            </div>
+            <div class="panel-footer">
+              <div class="pull-right">
+                <button type="submit" class="btn btn-primary"><?php echo __('admin.login.submit_label'); ?></button>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+<?php else: ?>
+
+  <div class="container">
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#users" aria-controls="users" role="tab" data-toggle="tab"><?php echo __('admin.tabs.users'); ?></a></li>
+      <li role="presentation"><a href="#tools" aria-controls="tools" role="tab" data-toggle="tab"><?php echo __('admin.tabs.tools'); ?></a></li>
+      <li role="presentation"><a href="#maintenance" aria-controls="maintenance" role="tab" data-toggle="tab"><?php echo __('admin.tabs.maintenance'); ?></a></li>
+      <li role="presentation"><a href="#server" aria-controls="server" role="tab" data-toggle="tab"><?php echo __('admin.tabs.server'); ?></a></li>
+    </ul>
+
+    <br>
+
+    <div class="tab-content">
+
+      <div role="tabpanel" class="tab-pane active" id="users">
+        <div class="panel panel-default">
+          <div class="panel-heading"><strong><?php echo __('admin.users.title'); ?></strong></div>
+          <div class="panel-body">
+            <?php if (!$users): ?>
+              <br>
+              <p class="lead text-center"><?php echo __('admin.users.empty'); ?></p>
+            <?php else: ?>
+              <table class="table table-condensed table-hover">
+                <?php $activeNum = 0; ?>
+                <?php foreach ($users as $i => $user): ?>
+                  <?php if ($user->is_active) $activeNum++; ?>
+
+                  <?php $u = $user->asObject(); ?>
+
+                  <?php if ($i === 0): ?>
+                    <thead>
+                      <?php foreach ($u as $key => $value): ?>
+                        <?php if (strpos($key, 'password') !== false) continue; ?>
+                        <th><code><?php echo strtoupper($key); ?></code></th>
+                      <?php endforeach; ?>
+                      <th>&nbsp;</th>
+                    </thead>
+                    <tbody>
+                  <?php endif; ?>
+
+                  <tr>
+                    <?php foreach ($u as $key => $value): ?>
+                      <?php if (strpos($key, 'password') !== false) continue; ?>
+                      <?php if ($key === 'id'): ?><th><?php else: ?><td><?php endif; ?>
+
+                      <?php
+
+                        if ($isEmail = (strpos($key, 'email') !== false)) {
+                          echo '<a href="mailto:' . $value . '">';
+                        } else if ($key === 'is_active') {
+                          echo '<span class="label label-' . ($value ? 'success' : 'danger') . '">';
+                        }
+
+                        if ($value === null) {
+                          echo '&ndash;';
+                        } if (is_bool($value)) {
+                          echo $value ? __('admin.users.bool.true') : __('admin.users.bool.false');
+                        } else if (is_numeric($value)) {
+                          echo $value;
+                        } else {
+                          echo strlen($value) > 33 ? substr($value, 0, 30) . '&hellip;' : $value;
+                        }
+
+                        if ($isEmail) {
+                          echo '</a>';
+                        } else if ($key === 'is_active' && !$value) {
+                          ?></span>&nbsp;
+
+                          <a
+                            href="<?php echo AuthBox::makeUrl('admin', ['do' => 'activateUser', 'id' => $user->id]); ?>"
+                            class="btn btn-default btn-xs"
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            title="<?php echo __('admin.users.activate'); ?>">
+                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                          </a>
+                          <?php
+                        }
+
+                      ?>
+
+                      <?php if ($key === 'id'): ?></th><?php else: ?></td><?php endif; ?>
+                    <?php endforeach; ?>
+
+                    <td>
+                      <div class="btn-group" role="group">
+                        <a
+                          href="<?php echo AuthBox::makeUrl('admin', ['do' => 'editUser', 'id' => $user->id]); ?>"
+                          class="btn btn-xs btn-default"
+                          data-toggle="tooltip"
+                          data-placement="bottom"
+                          title="<?php echo __('admin.users.edit'); ?>"
+                          data-action="edit-user"
+                          data-modal-target="#adminUserEditModal"
+                          data-user-id="<?php echo $user->id; ?>">
+                          <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        </a>
+
+                        <a
+                          href="<?php echo AuthBox::makeUrl('admin', ['do' => 'deleteUser', 'id' => $user->id]); ?>"
+                          class="btn btn-xs btn-default"
+                          data-toggle="tooltip"
+                          data-placement="bottom"
+                          title="<?php echo __('admin.users.delete'); ?>"
+                          data-action="delete-user"
+                          data-modal-target="#adminUserDeleteModal">
+                          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+
+                <?php endforeach; ?>
+                </tbody>
+              </table>
+            <?php endif; ?>
+          </div>
+          <?php if ($users): ?>
+            <div class="panel-footer">
+              <?php echo __('admin.users.stats', [
+                'total' => $totalNum = count($users),
+                'active' => $activeNum,
+                'inactive' => $totalNum - $activeNum,
+              ]); ?>
+            </div>
+          <?php endif; ?>
+        </div>
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="tools">
+        <div class="panel panel-default">
+          <div class="panel-heading"><strong><?php echo __('admin.tools.tokens.title'); ?></strong></div>
+          <div class="panel-body">
+            <div class="alert alert-info">
+              <?php echo __('admin.tools.tokens.info'); ?>
+            </div>
+
+            <?php if ($tokens = AuthBox::cfg('behaviour.autoActivationTokens')): ?>
+              <div class="activation-tokens">
+                <?php foreach ($tokens as $token): ?>
+                  <input
+                    type="text"
+                    readonly="readonly"
+                    class="form-control"
+                    data-input-select
+                    value="<?php echo AuthBox::makeUrl('register', ['t' => $token], true); ?>">
+                <?php endforeach; ?>
+              </div>
+            <?php endif; ?>
+          </div>
+        </div>
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="maintenance">
+        <div class="panel panel-default">
+          <div class="panel-heading"><strong><?php echo __('admin.maintenance.actions.title'); ?></strong></div>
+          <div class="panel-body">
+            <div class="alert alert-danger">
+              <span class="glyphicon glyphicon-alert" aria-hidden="true"></span>
+              &nbsp;
+              <?php echo __('admin.maintenance.actions.warning'); ?>
+            </div>
+            <div class="list-group">
+              <a href="<?php echo AuthBox::makeUrl('admin', ['do' => 'install'], true); ?>" class="list-group-item">
+                <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                <?php echo __('admin.maintenance.action.install'); ?>
+              </a>
+              <a href="<?php echo AuthBox::makeUrl('admin', ['do' => 'uninstall'], true); ?>" class="list-group-item">
+                <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                <?php echo __('admin.maintenance.action.uninstall'); ?>
+              </a>
+              <a href="<?php echo AuthBox::makeUrl('admin', ['do' => 'reinstall'], true); ?>" class="list-group-item">
+                <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                <?php echo __('admin.maintenance.action.reinstall'); ?>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="server">
+        <div class="panel panel-default">
+          <div class="panel-heading"><strong><?php echo __('admin.server.time.title'); ?></strong></div>
+          <div class="panel-body">
+            <br>
+            <p class="lead text-center"><?php echo date('Y-m-d\<\b\r\>H:i:s'); ?></p>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="panel panel-default">
+          <div class="panel-heading"><strong><?php echo __('admin.server.session.title'); ?></strong></div>
+          <div class="panel-body">
+            <br>
+            <pre><?php print_r($_SESSION); ?></pre>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="panel panel-default">
+          <div class="panel-heading"><strong><?php echo __('admin.server.phpinfo.title'); ?></strong></div>
+          <div class="panel-body">
+            <iframe src="<?php echo AuthBox::makeUrl('admin', ['do' => 'phpinfo'], true); ?>" class="phpinfo"></iframe>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="modal fade" id="adminUserDeleteModal" tabindex="-1" role="dialog" aria-labelledby="adminUserDeleteModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="adminUserDeleteModalLabel"><?php echo __('admin.users.delete.modal.title'); ?></h4>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-danger">
+            <?php echo __('admin.users.delete.modal.warning'); ?>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <?php echo __('admin.users.delete.modal.cancel'); ?>
+          </button>
+          <a href="#" class="btn btn-danger" data-modal-action="delete-user">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            <?php echo __('admin.users.delete.modal.apply'); ?>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="adminUserEditModal" tabindex="-1" role="dialog" aria-labelledby="adminUserEditModalLabel">
+    <form action="#" method="post">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="adminUserEditModalLabel"><?php echo __('admin.users.edit.modal.title'); ?></h4>
+          </div>
+          <div class="modal-body">
+            <?php
+
+              $fields = (new AuthBox\Models\User())->getAdditionalFields();
+
+            ?>
+
+            <?php foreach ($fields as $fieldName => $field): ?>
+              <div class="form-group">
+                <label for="editUser-<?php echo $fieldName; ?>">
+                  <?php echo $field['label']; ?>
+                </label>
+
+                <input
+                  type="<?php echo $field['type']; ?>"
+                  class="form-control"
+                  id="editUser-<?php echo $fieldName; ?>"
+                  name="<?php echo $fieldName; ?>">
+              </div>
+            <?php endforeach; ?>
+
+            <hr>
+
+            <div class="form-group">
+              <label for="editUser-password">
+                <?php echo __('fields.password.label'); ?>
+                <small>(<?php echo __('fields.password.leave_empty'); ?>)</small>
+              </label>
+              <input
+                type="password"
+                class="form-control"
+                id="editUser-password"
+                name="password"
+                placeholder="&bull;&bull;&bull;&bull;&bull;&bull;">
+            </div>
+
+            <hr>
+
+            <div class="form-group">
+              <label for="editUser-role">
+                <?php echo __('fields.role.label'); ?>
+              </label>
+              <select
+                class="form-control"
+                id="editUser-role"
+                name="role">
+                <?php foreach (AuthBox::cfg('acl.roles') as $role): ?>
+                  <option value="<?php echo $role; ?>"><?php echo $role; ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+
+            <div class="checkbox">
+              <label>
+                <input
+                  type="checkbox"
+                  id="editUser-is_active"
+                  name="is_active"
+                  value="1">
+                <?php echo __('fields.is_active.label'); ?>
+              </label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+              <?php echo __('admin.users.edit.modal.cancel'); ?>
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+              <?php echo __('admin.users.edit.modal.apply'); ?>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <?php
+    $formattedUsers = [];
+    foreach ($users as $i => $user) {
+      $u = $user->asObject();
+      unset($u->password, $u->plain_password);
+      $formattedUsers[(string) $u->id] = $u;
+    }
+  ?>
+
+  <script> var __users = <?php echo json_encode($formattedUsers); ?>; </script>
+
+<?php endif; ?>
+
+<?php include 'footer.phtml'; ?>

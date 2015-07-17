@@ -1,0 +1,32 @@
+<?php include 'header.phtml'; ?>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+
+        <div class="panel panel-default">
+          <div class="panel-heading"><h3 class="panel-title"><?php echo __('success.title'); ?></h3></div>
+          <div class="panel-body">
+            <br>
+            <p class="lead text-center"><?php echo __('success.text'); ?></p>
+
+            <?php if (!($user = AuthBox::getUser()) || !$user->is_active): ?>
+              <div class="alert alert-warning text-center"><?php echo __('success.pending'); ?></div>
+            <?php endif; ?>
+
+            <div class="text-center">
+              <a href="<?php echo $after_url; ?>" class="btn btn-primary">
+                <?php echo __('success.continue'); ?>
+                <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+              </a>
+            </div>
+            <br>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<?php include 'footer.phtml'; ?>
